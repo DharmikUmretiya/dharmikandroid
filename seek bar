@@ -1,0 +1,57 @@
+package com.example.wigets;
+
+import android.os.Bundle;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.SeekBar;
+import android.widget.TextView;
+
+public class MainActivity9 extends AppCompatActivity {
+    private SeekBar sBar;
+    private TextView tView;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main9);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        sBar = (SeekBar) findViewById(R.id.seekBar1);
+        tView = (TextView) findViewById(R.id.textview1);
+        tView.setText(sBar.getProgress() + "/" + sBar.getMax());
+
+        sBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int pval = 0;
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                pval = progress;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // write custom code to handle start of touch
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                tView.setText(pval + "/" + seekBar.getMax());
+            }
+        });
+
+
+
+    }
+
+
+}
